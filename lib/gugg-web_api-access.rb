@@ -9,7 +9,7 @@ module Gugg
     	U_THIRDPARTY = (1 << 5)
     	U_GUGG       = (1 << 7)
 
-      def self.check(apikey)
+      def self.get(apikey)
       	k = ApiKey[apikey]
 
       	if k == nil || k.access == 0

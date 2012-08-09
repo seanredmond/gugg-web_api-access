@@ -17,22 +17,22 @@ describe Gugg::WebApi::Access do
     @good_key = cfg['keys']['good']
   end
 
-	describe "#check" do
+	describe "#get" do
     context 'with non-existent key' do
       it "should return nil" do
-        Gugg::WebApi::Access::check(@bad_key).should eq(nil)
+        Gugg::WebApi::Access::get(@bad_key).should eq(nil)
       end
     end
 
     context 'with cancelled key' do
       it 'should return nil' do
-        Gugg::WebApi::Access::check(@cancelled_key).should eq(nil)
+        Gugg::WebApi::Access::get(@cancelled_key).should eq(nil)
       end
     end
 
     context 'with good key' do
       before :all do
-        @good_acc = Gugg::WebApi::Access::check(@good_key)
+        @good_acc = Gugg::WebApi::Access::get(@good_key)
       end
 
       it "should return an AccessLevel object" do
