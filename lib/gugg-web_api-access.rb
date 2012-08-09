@@ -8,6 +8,7 @@ module Gugg
     	U_TEST       = (1 << 4)
     	U_THIRDPARTY = (1 << 5)
     	U_GUGG       = (1 << 7)
+    	U_ANY        = (U_THIRDPARTY | U_GUGG)
 
       def self.get(apikey)
       	k = ApiKey[apikey]
@@ -19,6 +20,14 @@ module Gugg
       	return AccessLevel.new(k)
       end
 
+      def self.allow?(level, perms)
+      	if level == nil
+      		return false
+      	end
+
+      	return (level.access & perms) == perms
+      end
+
 			# Keys can be generated in ruby with 
 			# > require "securerandom"
 			# > SecureRandom.hex(16)
@@ -28,9 +37,12 @@ module Gugg
 			end
 
 			class AccessLevel
-				attr_reader :access
 				def initialize(v)
 					@access = v
+				end
+
+				def access
+					return @access.access
 				end
 			end
     end

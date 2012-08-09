@@ -40,4 +40,42 @@ describe Gugg::WebApi::Access do
       end
     end
   end
+
+  describe "#allow?" do
+    context 'with good key' do
+      before :all do
+        @good_acc = Gugg::WebApi::Access::get(@good_key)
+      end
+
+      it 'should allow user level TEST to read' do
+        perms = Gugg::WebApi::Access::A_READ | Gugg::WebApi::Access::U_TEST
+        access = Gugg::WebApi::Access::allow?(@good_acc, perms)
+        access.should eq(true)
+      end
+
+      it 'should not allow user level TEST to write' do
+        perms = Gugg::WebApi::Access::A_WRITE | Gugg::WebApi::Access::U_TEST
+        access = Gugg::WebApi::Access::allow?(@good_acc, perms)
+        access.should eq(false)
+      end
+    end
+
+    context 'with bad key' do
+      before :all do
+        @bad_acc = Gugg::WebApi::Access::get(@bad_key)
+      end
+
+      it 'should not allow read access' do
+        perms = Gugg::WebApi::Access::A_READ | Gugg::WebApi::Access::U_ANY
+        access = Gugg::WebApi::Access::allow?(@bad_acc, perms)
+        access.should eq(false)
+      end
+
+      it 'should not allow write access' do
+        perms = Gugg::WebApi::Access::A_WRITE | Gugg::WebApi::Access::U_ANY
+        access = Gugg::WebApi::Access::allow?(@bad_acc, perms)
+        access.should eq(false)
+      end
+    end
+  end
 end
