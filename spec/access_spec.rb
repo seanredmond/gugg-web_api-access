@@ -3,7 +3,7 @@ require "sequel"
 require "yaml"
 
 cfg = YAML.load_file('access_spec.yml')
-db = cfg['db']
+db = cfg['db']['mysql']
 @DB = Sequel.mysql(db['db'], :user=>db['user'], :password=>db['password'], 
   :host=>db['host'], :charset=>'utf8')
 
