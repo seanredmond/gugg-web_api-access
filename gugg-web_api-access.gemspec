@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Gugg::WebApi::Access::VERSION
 
-  gem.add_dependency "sequel"
-  gem.add_development_dependency "rspec"
-  gem.add_development_dependency "mysql"
+  # gem.add_dependency "sequel"
+  # gem.add_development_dependency "rspec"
+  # gem.add_development_dependency "mysql"
 end
