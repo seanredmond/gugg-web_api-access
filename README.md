@@ -1,5 +1,7 @@
 # Gugg::WebApi::Access
 
+[![Build Status](https://travis-ci.org/Guggenheim/gugg-web_api-access.png?branch=master)](https://travis-ci.org/Guggenheim/gugg-web_api-access)
+
 TODO: Write a gem description
 
 ## Installation
