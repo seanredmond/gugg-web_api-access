@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["sredmond@guggenheim.org"]
   gem.description   = %q{Guggenheim wep api access control}
   gem.summary       = %q{Unified way to check API keys for access.}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/Guggenheim/gugg-web_api-access"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -15,7 +15,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Gugg::WebApi::Access::VERSION
 
-  # gem.add_dependency "sequel"
-  # gem.add_development_dependency "rspec"
-  # gem.add_development_dependency "mysql"
+  gem.add_dependency "sequel"
+  gem.add_development_dependency "rake"
+  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "sqlite3"
 end

@@ -1,20 +1,40 @@
 require "rubygems"
 require "sequel"
-require "yaml"
 
-cfg = YAML.load_file('access_spec.yml')
-db = cfg['db']['mysql']
-@DB = Sequel.mysql(db['db'], :user=>db['user'], :password=>db['password'], 
-  :host=>db['host'], :charset=>'utf8')
+@DB = Sequel.sqlite()
+@DB.create_table(:api_keys){
+  String :key
+  String :user
+  Fixnum :access
+  String :description
+  String :updated_at
+}
+
+@DB[:api_keys].insert(
+  :key => '00ea1ae3bd1fef315ba91d2ad8a125ad', 
+  :user => 'unit_test_cancelled', 
+  :access => 0, 
+  :description => 'Test key: exists but no access', 
+  :updated_at => '2012-08-09 20:10:25'
+)
+@DB[:api_keys].insert(
+  :key => 'ed3c63916af176b3af878f98156e07f4', 
+  :user => 'unit_test_good', 
+  :access => 17, 
+  :description => 'Test key: valid', 
+  :updated_at => '2012-08-09 21:37:06'
+)
 
 require 'gugg-web_api-access'
 
 describe Gugg::WebApi::Access do
   before :all do
-    cfg = YAML.load_file('access_spec.yml')
-    @bad_key = cfg['keys']['bad']
-    @cancelled_key = cfg['keys']['cancelled']
-    @good_key = cfg['keys']['good']
+    # Should not exist in the access DB
+    @bad_key = '82d309784cadc54b3381828ae38cef78'
+    # Should exist but have no access
+    @cancelled_key = '00ea1ae3bd1fef315ba91d2ad8a125ad'
+    # Should exist and have access
+    @good_key = 'ed3c63916af176b3af878f98156e07f4'
   end
 
 	describe "#get" do
